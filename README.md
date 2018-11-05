@@ -12,3 +12,11 @@ Previous output files will be overwritten to preserve idempotence.
 
 
 ## Approach
+From the given 10-line example, we see there's a header
+* Assume order of elements is same in all inputs
+* Assume separator is always `;`
+[Efficient line by line reading of large files](https://stackoverflow.com/questions/8009882/how-to-a-read-large-file-line-by-line-in-python)
+Since we require tracking the occupations and states, we can store their details in memory - they're categorical and finite.
+Since we need their percentages of the total, we can add to the solution line by line.
+Check for certified applications, store counts for each state, occupation. Once file is read, get top 10 and print to output files.
+
