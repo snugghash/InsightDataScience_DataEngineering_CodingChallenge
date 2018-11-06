@@ -32,4 +32,4 @@ The procedural functions to be performed to get the required result:
 1. Once whole file is read, sort categorical stats and get top 10.
 1. Print to output files.
 
-Each of these is separately testable.
+Each of these should be separately testable.

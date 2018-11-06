@@ -29,7 +29,7 @@ def sort_and_print(aggregate, stats, header_string, output_file):
     """
     list_of_fields = []
     for k,v in aggregate.items():
-        list_of_fields.append([k, v, str(stats[k]) + "%"])
+        list_of_fields.append([k, v, f"{stats[k]:.1f}%"])
     sorted_list_of_fields = sorted(list_of_fields, key = sort_by)
     top10_sorted_list_of_fields = sorted_list_of_fields[:10]
     # Gets the format of things needed as a list, converts all to string, joins with desired separator. TODO make sep, format and such parametric
@@ -59,6 +59,7 @@ def get_relevant_data_from_file(filename, binary_selector_field = 2, binary_sele
     filename: file to read from
     binary_selector_field, binary_selector_field_value: Strings, field that has to be `binary_selector_field_value` to get data from it, in our case field 2="CERTIFIED"
     list_of_fields: String names of fields to get data. Positions change across inputs, must use strings.
+    ? Split up for better tests again
     """
     field_numbers = [0] * len(list_of_fields)
     aggregates = [defaultdict(int), defaultdict(int)]
