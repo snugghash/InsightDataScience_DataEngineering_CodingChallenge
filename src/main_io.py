@@ -26,15 +26,39 @@ def main():
                 # TODO make it choose 24 from the spec and header like "SOC"
                 occupation_aggregate[words[24]] = occupation_aggregate[words[24]] + 1
     occ_perc = get_stats(occupation_aggregate)
-    with open(output_file_top10occupations, 'w') as f:
-        f.write("TOP_OCCUPATIONS;NUMBER_CERTIFIED_APPLICATIONS;PERCENTAGE\n")
-        for k,v in occupation_aggregate.items():
+    sort_and_print(occupation_aggregate, occ_perc, "TOP_OCCUPATIONS;NUMBER_CERTIFIED_APPLICATIONS;PERCENTAGE\n", output_file_top10occupations)
+    state_perc = get_stats(state_aggregate)
+    sort_and_print(state_aggregate, state_perc, "TOP_STATES;NUMBER_CERTIFIED_APPLICATIONS;PERCENTAGE\n", output_file_top10states)
+
+
+
+def sort_and_print(aggregate, stats, header_string, output_file):
+    """
+    Returns nothing, side effect: creates and populates `output_file`
+    TODO think about getting stats here as well. Dependance on get_stats?
+    TODO split into sort and print fn, clear parameter distinction, if this one goes over the number of lines per fn
+    Parameters
+    ----
+    aggregate: Dict of values
+    stats: Dict of totals and percentages
+    """
+    def sort_by(tuple_like):
+        """
+        https://stackoverflow.com/questions/24579202/
+        """
+        return (-tuple_like[1], tuple_like[0])
+
+    printable_list_of_fields = []
+    for k,v in aggregate.items():
+        # TODO add new line
+        printable_list_of_fields.append([k, v, str(stats[k]) + '%'])
+    printable_list_of_fields = sorted(printable_list_of_fields, key = sort_by)
+    with open(output_file, 'w') as f:
+        f.write(header_string)
+        for i in printable_list_of_fields:
             # Gets the format of things needed as a list, converts all to string, joins with desired separator. TODO make sep, format and such parametric
             # TODO percentage floating point formatting when printing
-            f.write((';').join(map(str,[k, v, str(occ_perc[k]) + '%'])) + '\n')
-
-    state_perc = get_stats(state_aggregate)
-
+            f.write((';').join(map(str,i)) + '\n')
 
 
 
