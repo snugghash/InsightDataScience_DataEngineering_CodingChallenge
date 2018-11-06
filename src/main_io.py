@@ -34,31 +34,32 @@ def main():
 def sort_and_print(aggregate, stats, header_string, output_file):
     """
     Returns nothing, side effect: creates and populates `output_file`
-    TODO think about getting stats here as well. Dependance on get_stats?
+    TODO think about getting stats here as well. Dependance on get_stats? What about testing?
     TODO split into sort and print fn, clear parameter distinction, if this one goes over the number of lines per fn
     Parameters
     ----
-    aggregate: Dict of values
-    stats: Dict of totals and percentages
+    aggregate: Dict of values\n
+    stats: Dict of totals and percentages\n
     """
 
     def sort_by(tuple_like):
         """
         https://stackoverflow.com/questions/24579202/
+
+        ? scaling issues
         """
         return (-tuple_like[1], tuple_like[0])
 
-    printable_list_of_fields = []
+    list_of_fields = []
     for k,v in aggregate.items():
-        # TODO add new line
-        printable_list_of_fields.append([k, v, str(stats[k]) + "%"])
-    printable_list_of_fields = sorted(printable_list_of_fields, key = sort_by)
+        list_of_fields.append([k, v, str(stats[k]) + "%"])
+    sorted_list_of_fields = sorted(list_of_fields, key = sort_by)
+    # Gets the format of things needed as a list, converts all to string, joins with desired separator. TODO make sep, format and such parametric
+    # TODO percentage floating point formatting when printing
+    printable_list_of_fields = "\n".join([";".join(map(str,i)) for i in sorted_list_of_fields])
     with open(output_file, 'w') as f:
         f.write(header_string)
-        for i in printable_list_of_fields:
-            # Gets the format of things needed as a list, converts all to string, joins with desired separator. TODO make sep, format and such parametric
-            # TODO percentage floating point formatting when printing
-            f.write((';').join(map(str,i)) + '\n')
+        f.write(printable_list_of_fields)
 
 
 
