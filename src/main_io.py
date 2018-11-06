@@ -2,6 +2,9 @@ import sys
 from collections import defaultdict
 
 def main():
+    """
+    TODO think about better data structure, list of tuples might be better
+    """
     input_file = sys.argv[1]
     output_file_top10occupations = sys.argv[2]
     output_file_top10states = sys.argv[3]
