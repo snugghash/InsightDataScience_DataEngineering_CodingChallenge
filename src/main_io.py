@@ -1,4 +1,5 @@
 import sys
+from collections import defaultdict
 
 def main():
     input_file = sys.argv[1]
