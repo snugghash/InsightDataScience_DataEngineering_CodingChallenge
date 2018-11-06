@@ -1,5 +1,4 @@
 import sys
-import string
 
 def main():
     input_file = sys.argv[1]
@@ -13,7 +12,6 @@ def main():
             # RF out if we need other conditionals and such
             words = line.split(";")
             # Strip start/end \" tokens, they aren't in output example
-            # words = list(map(string.strip("\""), words))  # Partial fn?
             words = [i.strip("\"") for i in words]
             if(words[0] == ""):
                 # Header
@@ -29,7 +27,7 @@ def main():
         for k,v in occupation_aggregate.items():
             # Gets the format of things needed as a list, converts all to string, joins with desired separator. TODO make sep, format and such parametric
             # TODO percentage floating point formatting when printing
-            f.write((';').join(map(str,[k[0:], v, str(occ_perc[k]) + '%'])) + '\n')
+            f.write((';').join(map(str,[k, v, str(occ_perc[k]) + '%'])) + '\n')
 
     state_perc = get_stats(state_aggregate)
 
