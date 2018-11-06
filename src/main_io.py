@@ -3,7 +3,7 @@ from collections import defaultdict
 
 def main():
     """
-    TODO think about better data structure, list of tuples might be better
+    TODO think about better data structure, list of tuples might be better, perhaps a class for a self-sorting tuple manager, essentially a DB
     """
     input_file = sys.argv[1]
     output_file_top10occupations = sys.argv[2]
