@@ -34,22 +34,12 @@ def main():
 def sort_and_print(aggregate, stats, header_string, output_file):
     """
     Returns nothing, side effect: creates and populates `output_file`
-    TODO think about getting stats here as well. Dependance on get_stats? What about testing?
     TODO split into sort and print fn, clear parameter distinction, if this one goes over the number of lines per fn
     Parameters
     ----
     aggregate: Dict of values\n
     stats: Dict of totals and percentages\n
     """
-
-    def sort_by(tuple_like):
-        """
-        https://stackoverflow.com/questions/24579202/
-
-        ? scaling issues
-        """
-        return (-tuple_like[1], tuple_like[0])
-
     list_of_fields = []
     for k,v in aggregate.items():
         list_of_fields.append([k, v, str(stats[k]) + "%"])
@@ -60,6 +50,16 @@ def sort_and_print(aggregate, stats, header_string, output_file):
     with open(output_file, 'w') as f:
         f.write(header_string)
         f.write(printable_list_of_fields)
+
+
+
+def sort_by(tuple_like):
+    """
+    https://stackoverflow.com/questions/24579202/
+
+    ? scaling issues
+    """
+    return (-tuple_like[1], tuple_like[0])
 
 
 
