@@ -1,4 +1,0 @@
-H1B_FY_2014.csv filter=lfs diff=lfs merge=lfs -text
-H1B_FY_2015.csv filter=lfs diff=lfs merge=lfs -text
-H1B_FY_2016.csv filter=lfs diff=lfs merge=lfs -text
-h1b_input.csv filter=lfs diff=lfs merge=lfs -text
