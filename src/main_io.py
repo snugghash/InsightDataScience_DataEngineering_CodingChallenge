@@ -21,7 +21,7 @@ def main():
                 # Header
                 continue
             elif(words[2] == "CERTIFIED"):
-                state_aggregate[words[12]] = state_aggregate[words[12]] + 1
+                state_aggregate[words[50]] = state_aggregate[words[50]] + 1
 
                 # TODO make it choose 24 from the spec and header like "SOC"
                 occupation_aggregate[words[24]] = occupation_aggregate[words[24]] + 1
