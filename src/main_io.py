@@ -22,7 +22,6 @@ def main():
                 continue
             elif(words[2] == "CERTIFIED"):
                 state_aggregate[words[50]] = state_aggregate[words[50]] + 1
-
                 # TODO make it choose 24 from the spec and header like "SOC"
                 occupation_aggregate[words[24]] = occupation_aggregate[words[24]] + 1
     occ_perc = get_stats(occupation_aggregate)
@@ -42,6 +41,7 @@ def sort_and_print(aggregate, stats, header_string, output_file):
     aggregate: Dict of values
     stats: Dict of totals and percentages
     """
+
     def sort_by(tuple_like):
         """
         https://stackoverflow.com/questions/24579202/
