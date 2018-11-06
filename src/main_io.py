@@ -51,7 +51,7 @@ def sort_and_print(aggregate, stats, header_string, output_file):
     printable_list_of_fields = []
     for k,v in aggregate.items():
         # TODO add new line
-        printable_list_of_fields.append([k, v, str(stats[k]) + '%'])
+        printable_list_of_fields.append([k, v, str(stats[k]) + "%"])
     printable_list_of_fields = sorted(printable_list_of_fields, key = sort_by)
     with open(output_file, 'w') as f:
         f.write(header_string)
