@@ -9,21 +9,8 @@ def main():
     output_file_top10occupations = sys.argv[2]
     output_file_top10states = sys.argv[3]
 
-    occupation_aggregate = defaultdict(int)
-    state_aggregate = defaultdict(int)
-    with open(input_file) as f:
-        for line in f:
-            # RF out if we need other conditionals and such
-            words = line.split(";")
-            # Strip start/end \" tokens, they aren't in output example
-            words = [i.strip("\"") for i in words]
-            if(words[0] == ""):
-                # Header
-                continue
-            elif(words[2] == "CERTIFIED"):
-                state_aggregate[words[50]] = state_aggregate[words[50]] + 1
-                # TODO make it choose 24 from the spec and header like "SOC"
-                occupation_aggregate[words[24]] = occupation_aggregate[words[24]] + 1
+    occupation_aggregate, state_aggregate = tuple(get_relevant_data_from_file(input_file))
+
     occ_perc = get_stats(occupation_aggregate)
     sort_and_print(occupation_aggregate, occ_perc, "TOP_OCCUPATIONS;NUMBER_CERTIFIED_APPLICATIONS;PERCENTAGE\n", output_file_top10occupations)
     state_perc = get_stats(state_aggregate)
@@ -64,8 +51,34 @@ def sort_by(tuple_like):
 
 
 
-def read_chunk():
-    pass
+def get_relevant_data_from_file(filename, binary_selector_field = 2, binary_selector_field_value = "CERTIFIED", list_of_fields = ["SOC_NAME", "WORKSITE_STATE"], separator = ";"):
+    """
+    ? perhaps remove default arg
+    Parameters
+    ----
+    filename: file to read from
+    binary_selector_field, binary_selector_field_value: Strings, field that has to be `binary_selector_field_value` to get data from it, in our case field 2="CERTIFIED"
+    list_of_fields: String names of fields to get data. Positions change across inputs, must use strings.
+    """
+    field_numbers = [0] * len(list_of_fields)
+    aggregates = [defaultdict(int), defaultdict(int)]
+    with open(filename) as f:
+        for line in f:
+            # RF out if we need other conditionals and such
+            words = line.split(separator)
+            # Strip start/end \" tokens (it strips ALL \" though), they aren't in output example
+            quoteless_words = [i.strip("\"") for i in words]
+            if(quoteless_words[0] == ""):
+                # Header line, find the positions of the needed data
+                for i,field in enumerate(list_of_fields):
+                    for j,e in enumerate(quoteless_words):
+                        if(e == field):
+                            field_numbers[i] = j
+            elif(quoteless_words[binary_selector_field] == binary_selector_field_value):
+                # If CERTIFIED, get data
+                for i,field_number in enumerate(field_numbers):
+                    aggregates[i][quoteless_words[field_number]] = aggregates[i][quoteless_words[field_number]] + 1
+    return aggregates
 
 
 
