@@ -6,9 +6,8 @@ def main():
     output_file_top10occupations = sys.argv[2]
     output_file_top10states = sys.argv[3]
 
-    # TODO use default dict defaultdict(int)
-    occupation_aggregate = {}
-    state_aggregate = {}
+    occupation_aggregate = defaultdict(int)
+    state_aggregate = defaultdict(int)
     with open(input_file) as f:
         for line in f:
             # RF out if we need other conditionals and such
@@ -20,10 +19,10 @@ def main():
                 # Header
                 continue
             elif(words[2] == "CERTIFIED"):
-                state_aggregate[words[12]] = state_aggregate.get(words[12], 0) + 1
+                state_aggregate[words[12]] = state_aggregate[words[12]] + 1
 
                 # TODO make it choose 24 from the spec and header like "SOC"
-                occupation_aggregate[words[24]] = occupation_aggregate.get(words[24], 0) + 1
+                occupation_aggregate[words[24]] = occupation_aggregate[words[24]] + 1
     occ_perc = get_stats(occupation_aggregate)
     with open(output_file_top10occupations, 'w') as f:
         f.write("TOP_OCCUPATIONS;NUMBER_CERTIFIED_APPLICATIONS;PERCENTAGE\n")
@@ -59,7 +58,7 @@ def get_stats(the_dict):
     total_count = 0
     for k,v in the_dict.items():
         total_count = total_count + v
-    percentage_dict = {}
+    percentage_dict = defaultdict(int)
     for k,v in the_dict.items():
         percentage_dict[k] = (100 * v) / total_count
     return percentage_dict
