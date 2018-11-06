@@ -15,15 +15,20 @@ class test_io(unittest.TestCase):
         pass
 
     def test_successful_read_known_data(self):
-        assert(get_stats(get_relevant_data_from_file("insight_testsuite/tests/test1/input/h1b_input.csv")[2])["CA"] == 5.0, "insight test state CA percentage invalid")
+        tmp = get_stats(get_relevant_data_from_file("../insight_testsuite/tests/test_1/input/h1b_input.csv")[1])
+        assert tmp["CA"] == 10.0, "insight test; state CA percentage" + str(tmp["CA"]) + " invalid"
 
 
 
     def test_successful_read_known_big_data(self):
-        assert(get_stats(get_relevant_data_from_file("H1B_FY_2016.csv")[2])["CA"] == 5.0, "FY 2016 CA percentage invalid")
+        tmp = get_stats(get_relevant_data_from_file("../input/H1B_FY_2016.csv")[1])
+        assert f'{tmp["CA"]:.1f}' == "18.2", "insight test; state CA percentage" + str(tmp["CA"]) + " invalid"
 
 
 
     def test_estimate_scaling(self):
         pass
 
+
+    def test_decimal_numbers_in_percent_display(self):
+        pass
