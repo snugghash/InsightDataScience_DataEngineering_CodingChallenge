@@ -44,9 +44,10 @@ def sort_and_print(aggregate, stats, header_string, output_file):
     for k,v in aggregate.items():
         list_of_fields.append([k, v, str(stats[k]) + "%"])
     sorted_list_of_fields = sorted(list_of_fields, key = sort_by)
+    top10_sorted_list_of_fields = sorted_list_of_fields[:10]
     # Gets the format of things needed as a list, converts all to string, joins with desired separator. TODO make sep, format and such parametric
     # TODO percentage floating point formatting when printing
-    printable_list_of_fields = "\n".join([";".join(map(str,i)) for i in sorted_list_of_fields])
+    printable_list_of_fields = "\n".join([";".join(map(str,i)) for i in top10_sorted_list_of_fields])
     with open(output_file, 'w') as f:
         f.write(header_string)
         f.write(printable_list_of_fields)
